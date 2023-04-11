@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  repository_dispatch:
+    types: [release]
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Report Variables
+        run: |
+          echo ${{ github.event.client_payload.version }}
+          echo ${{ github.event.client_payload.jar_sha256 }}
+      - name: Update Scripts
+        run: |
+            LINE="$(grep -E 'download/EzASM(.*)-full.jar' ezasm.rb | awk '{print $2}')"
+            LINE="${LINE#*/download/EzASM-}"
+            LINE="${LINE%-full.jar*}"
+            sed -i "s/${LINE}/${{ github.event.client_payload.version }}/g" ezasm.rb
+            
+            LINE="$(grep -E 'sha256 .+' ezasm.rb | awk '{print $2}')"
+            LINE="${LINE#\"}"
+            LINE="${LINE%\"}"
+            sed -i "s/${LINE}/${{ github.event.client_payload.jar_sha256 }}/g" ezasm.rb
+      - name: Commit and Push
+        uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
+        with:
+            message: 'Version bump'
