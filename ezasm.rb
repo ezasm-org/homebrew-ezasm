@@ -1,8 +1,8 @@
 class Ezasm < Formula
   desc "Assembly-like programming language for use in education"
   homepage "https://github.com/ezasm-org/EzASM"
-  url "https://github.com/ezasm-org/EzASM-releases/releases/latest/download/EzASM-1.0.0-full.jar"
-  sha256 "625620098438cac98a293a88e12d34db9727cac8a34d93096180e065115920cf"
+  url "https://github.com/ezasm-org/EzASM-releases/releases/latest/download/EzASM-1.0.1-full.jar"
+  sha256 "4fd1243bad52c8e4cf579662534ec6751215d3bd258c5a6266f224a1c5ba832b"
   license "MIT"
 
   livecheck do
